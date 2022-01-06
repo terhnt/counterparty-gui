@@ -25,13 +25,13 @@ from PyQt5.QtQml import QJSValue
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 
-import counterpartygui
-from counterpartygui.api import CounterpartydAPI, CounterpartydRPCError
-from counterpartygui.config import Config
-from counterpartycli.clientapi import ConfigurationError
-from counterpartylib.lib import log
+import unopartygui
+from unopartygui.api import UnopartydAPI, UnopartydRPCError
+from unopartygui.config import Config
+from unopartycli.clientapi import ConfigurationError
+from unopartylib.lib import log
 
-from counterpartygui import tr
+from unopartygui import tr
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +80,7 @@ class GUI(QMainWindow):
         log.set_up(logger, verbose=config.VERBOSE, logfile=config.LOG_FILE)
 
         self.resize(1024, 680)
-        self.setWindowTitle(tr("Counterparty GUI"))
+        self.setWindowTitle(tr("Unoparty GUI"))
         icon = QtGui.QIcon('assets/counterparty.icns')
         self.setWindowIcon(icon)
         self.app.setWindowIcon(icon)
@@ -93,7 +93,7 @@ class GUI(QMainWindow):
         mainMenuBar = QMenuBar()
         newAct = QAction(tr("Preferences..."), self)
         newAct.triggered.connect(openPreference)
-        fileMenu = mainMenuBar.addMenu(tr("Counterparty GUI"))
+        fileMenu = mainMenuBar.addMenu(tr("Unoparty GUI"))
         fileMenu.addAction(newAct)
         self.setMenuBar(mainMenuBar)
 
@@ -109,11 +109,11 @@ class GUI(QMainWindow):
 
     # init clientapi
     def initXcpApi(self):
-        if hasattr(self, 'xcpApi') and isinstance(self.xcpApi, CounterpartydAPI):
+        if hasattr(self, 'xcpApi') and isinstance(self.xcpApi, UnopartydAPI):
             return True
         else:
             try:
-                self.xcpApi = CounterpartydAPI(self.config)
+                self.xcpApi = UnopartydAPI(self.config)
                 return True
             except ConfigurationError as e:
                 self.show()
@@ -130,17 +130,17 @@ class GUI(QMainWindow):
         try:
             serverInfo = self.xcpApi.call({'method': 'get_running_info', 'params':[]}, return_dict=True)
 
-            counterpartyLastBlock = serverInfo['last_block']['block_index']
+            unopartyLastBlock = serverInfo['last_block']['block_index']
             walletLastBlock = self.xcpApi.call({'method': 'wallet_last_block', 'params':{}}, return_dict=True)
 
             message = 'Server Last Block: {} | Wallet Last Block: {}'
 
-            self.statusBar().showMessage(message.format(counterpartyLastBlock, walletLastBlock))
+            self.statusBar().showMessage(message.format(unopartyLastBlock, walletLastBlock))
 
-            if self.currentBlock is not None and self.currentBlock != counterpartyLastBlock:
-                self.notifyPlugins('new_block', {'block_index': counterpartyLastBlock})
+            if self.currentBlock is not None and self.currentBlock != unopartyLastBlock:
+                self.notifyPlugins('new_block', {'block_index': unopartyLastBlock})
 
-            self.currentBlock = counterpartyLastBlock
+            self.currentBlock = unopartyLastBlock
 
             return True
         # TODO
@@ -151,7 +151,7 @@ class GUI(QMainWindow):
                     self.splash.hide()
                 self.config.initialize(openDialog=True)
                 exit()
-            # else fails silently, error are already shown by `api.CounterpartydRPCError`
+            # else fails silently, error are already shown by `api.UnopartydRPCError`
             # and refreshStatus is executed each self.config.POLL_INTERVAL second
             return False
 
@@ -300,13 +300,13 @@ def main():
 
     if platform.system() == "Windows":
         import ctypes
-        appid = 'counterparty.counterparty-gui' # arbitrary string
+        appid = 'unoparty.unoparty-gui' # arbitrary string
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
     
     # load global translation
     translator = QtCore.QTranslator()
-    fileName = 'counterpartygui_'.format(QtCore.QLocale.system().name())
-    #fileName = 'counterpartygui_fr'
+    fileName = 'unopartygui_'.format(QtCore.QLocale.system().name())
+    #fileName = 'unopartygui_fr'
     translator.load(fileName, 'i18n')
     app.installTranslator(translator)
 
@@ -315,7 +315,7 @@ def main():
     splash.setMask(splash_pix.mask())
     splash.show()
     splash.showMessage(tr("Loading wallet..."), Qt.AlignBottom | Qt.AlignHCenter);
-    setattr(counterpartygui, 'splash', splash)
+    setattr(unopartygui, 'splash', splash)
     app.processEvents()
 
     config = Config(splash=splash)
