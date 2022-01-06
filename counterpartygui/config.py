@@ -11,13 +11,13 @@ logger = logging.getLogger(__name__)
 
 from PyQt5 import QtGui, QtCore, QtWidgets
 
-from counterpartylib.lib import config, log
+from unopartylib.lib import config, log
 
-from counterpartycli import client, server
-from counterpartycli.util import add_config_arguments
-from counterpartycli.setup import generate_config_files, generate_config_file
+from unopartycli import client, server
+from unopartycli.util import add_config_arguments
+from unopartycli.setup import generate_config_files, generate_config_file
 
-from counterpartygui import tr
+from unopartygui import tr
 
 APP_NAME = 'unoparty-gui'
 APP_VERSION = '1.0.0'
