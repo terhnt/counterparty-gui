@@ -25,7 +25,7 @@ Rectangle {
             }
             var amount = Number(wallet['assets'][asset]).toFixed(2)
             var label = assetName + ' <font style="color:#888888">[' + amount + ']</font>';
-            if (asset === 'BTC' || asset === 'XCP') {
+            if (asset === 'UNO' || asset === 'XUP') {
                 menu['items'].unshift({'label': label, 'value': asset});
             } else {
                 menu['items'].push({'label': label, 'value': asset});
@@ -67,7 +67,7 @@ Rectangle {
         }
         sendFormComp.sources = sources;
 
-        if (root.currentAsset != 'BTC') {
+        if (root.currentAsset != 'UNO') {
             sendsListComp.visible = true;
             // populate the transactions list
             for (var t in assetInfo['sends']) {
@@ -169,7 +169,7 @@ Rectangle {
         }
         Text {
             id: noTxListForBTC
-            text: qsTr("Transaction list not available for BTC")
+            text: qsTr("Transaction list not available for UNO")
             anchors.top: sendFormComp.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: 10
