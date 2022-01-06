@@ -11,11 +11,11 @@ from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMessageBox, QWidget, QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton
 from PyQt5.QtQml import QJSValue
-from counterpartycli import clientapi
-from counterpartycli.wallet import LockedWalletError
-from counterpartygui import tr
-from counterpartylib.lib import log
-import counterpartygui
+from unopartycli import clientapi
+from unopartycli.wallet import LockedWalletError
+from unopartygui import tr
+from unopartylib.lib import log
+import unopartygui
 
 logger = logging.getLogger(__name__)
 
@@ -27,10 +27,10 @@ class DecimalEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 # TODO: display message box
-class CounterpartydRPCError(Exception):
+class UnopartydRPCError(Exception):
     def __init__(self, message):
-        if hasattr(counterpartygui, 'splash'):
-            counterpartygui.splash.hide()
+        if hasattr(unopartygui, 'splash'):
+            unopartygui.splash.hide()
         super().__init__(message)
         msgBox = QMessageBox()
         msgBox.setText(message)
@@ -76,13 +76,13 @@ def pubkeyResolver(address):
     message = tr('Public keys (hexadecimal) or Private key (Wallet Import Format) for `{}`: ').format(address)
     return InputDialog.input(message=message)
 
-class CounterpartydAPI(QObject):
+class UnopartydAPI(QObject):
     def __init__(self, config):
-        super(CounterpartydAPI, self).__init__()
+        super(UnopartydAPI, self).__init__()
         clientapi.initialize(testnet=config.TESTNET, testcoin=False,
-                            counterparty_rpc_connect=config.COUNTERPARTY_RPC_CONNECT, counterparty_rpc_port=config.COUNTERPARTY_RPC_PORT, 
-                            counterparty_rpc_user=config.COUNTERPARTY_RPC_USER, counterparty_rpc_password=config.COUNTERPARTY_RPC_PASSWORD,
-                            counterparty_rpc_ssl=config.COUNTERPARTY_RPC_SSL, counterparty_rpc_ssl_verify=config.COUNTERPARTY_RPC_SSL_VERIFY,
+                            unoparty_rpc_connect=config.UNOPARTY_RPC_CONNECT, unoparty_rpc_port=config.UNOPARTY_RPC_PORT, 
+                            unoparty_rpc_user=config.UNOPARTY_RPC_USER, unoparty_rpc_password=config.UNOPARTY_RPC_PASSWORD,
+                            unoparty_rpc_ssl=config.UNOPARTY_RPC_SSL, unoparty_rpc_ssl_verify=config.UNOPARTY_RPC_SSL_VERIFY,
                             wallet_name=config.WALLET_NAME, wallet_connect=config.WALLET_CONNECT, wallet_port=config.WALLET_PORT, 
                             wallet_user=config.WALLET_USER, wallet_password=config.WALLET_PASSWORD,
                             wallet_ssl=config.WALLET_SSL, wallet_ssl_verify=config.WALLET_SSL_VERIFY,
@@ -110,9 +110,9 @@ class CounterpartydAPI(QObject):
                 clientapi.call('unlock', {'passphrase': passphrase})
                 return self.call(query)
             except Exception as e:
-                raise CounterpartydRPCError(str(e))
+                raise UnopartydRPCError(str(e))
         except Exception as e:
-            raise CounterpartydRPCError(str(e))
+            raise UnopartydRPCError(str(e))
         
         # TODO: hack, find a real solution
         result = json.dumps(result, cls=DecimalEncoder)

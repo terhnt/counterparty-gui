@@ -6,21 +6,21 @@ APP_VERSION = "1.0.0"
 
 required_packages = [
     'appdirs',
-    'counterparty-cli'
+    'unoparty-cli'
 ]
 
 setup_options = {
     'name': counterpartygui.APP_NAME,
     'version': counterpartygui.APP_VERSION,
-    'author': 'Counterparty Foundation',
-    'author_email': 'support@counterparty.io',
-    'maintainer': 'Ouziel Slama',
-    'maintainer_email': 'ouziel@counterparty.io',
-    'url': 'http://counterparty.io',
+    'author': 'Counterparty/Unoparty Foundation',
+    'author_email': 'support@unobtanium.uno',
+    'maintainer': 'Andrew K',
+    'maintainer_email': 'info@unobtanium.uno',
+    'url': 'http://unoparty.io',
     'license': 'MIT',
-    'description': 'Counterparty Wallet',
+    'description': 'Unoparty Wallet',
     'long_description': '',
-    'keywords': 'counterparty,bitcoin',
+    'keywords': 'unoparty,unobtanium,xup',
     'classifiers': [
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
@@ -35,8 +35,8 @@ setup_options = {
         "Topic :: Office/Business :: Financial",
         "Topic :: System :: Distributed Computing"
     ],
-    'download_url': 'https://github.com/CounterpartyXCP/counterparty-gui/releases/tag/v' + counterpartygui.APP_VERSION,
-    'provides': ['counterpartygui'],
+    'download_url': 'https://github.com/terhnt/unoparty-gui/releases/tag/v' + counterpartygui.APP_VERSION,
+    'provides': ['unopartygui'],
     'packages': find_packages(),
     'zip_safe': False,
     'install_requires': required_packages
