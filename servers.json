@@ -1,5 +1,5 @@
 [{
-    "connect": "counterwallet.io",
+    "connect": "unowallet.io",
     "user": "rpc",
     "password": "pass",
     "ssl": false

@@ -1,6 +1,6 @@
 import sys
 from setuptools import setup, find_packages
-import counterpartygui
+import unopartygui
 
 APP_VERSION = "1.0.0"
 
@@ -10,8 +10,8 @@ required_packages = [
 ]
 
 setup_options = {
-    'name': counterpartygui.APP_NAME,
-    'version': counterpartygui.APP_VERSION,
+    'name': unopartygui.APP_NAME,
+    'version': unopartygui.APP_VERSION,
     'author': 'Counterparty/Unoparty Foundation',
     'author_email': 'support@unobtanium.uno',
     'maintainer': 'Andrew K',
@@ -35,7 +35,7 @@ setup_options = {
         "Topic :: Office/Business :: Financial",
         "Topic :: System :: Distributed Computing"
     ],
-    'download_url': 'https://github.com/terhnt/unoparty-gui/releases/tag/v' + counterpartygui.APP_VERSION,
+    'download_url': 'https://github.com/terhnt/unoparty-gui/releases/tag/v' + unopartygui.APP_VERSION,
     'provides': ['unopartygui'],
     'packages': find_packages(),
     'zip_safe': False,

@@ -2,16 +2,16 @@ import os, sys, hashlib, shutil
 import ctypes.util
 from cx_Freeze import setup, Executable
 
-import counterpartygui
+import unopartygui
 
 # Check the presence, or update the path for folowing files
-COUNTERPARTYLIB_PATH = 'C:\\counterparty\\counterpartyd\\counterpartylib'
+UNOPARTYLIB_PATH = 'C:\\unoparty\\unoparty-lib\\unopartylib'
 CERTIFI_PEM_PATH = 'C:\\Python34\\Lib\\site-packages\\certifi-14.05.14-py3.4.egg\\certifi\\cacert.pem'
 QML_LIBS_PATH = 'C:\\Python34\\Lib\\site-packages\\PyQt5\\qml'
 
 # Dependencies are automatically detected, but it might need fine tuning.
 build_exe_options = {
-    "excludes": ['counterpartylib'],
+    "excludes": ['unopartylib'],
     "packages": [
         'PyQt5.QtNetwork',
         'colorlog',
@@ -38,7 +38,7 @@ build_exe_options = {
         ("plugins", "plugins"),
         ("assets", "assets"),
         ("i18n", "i18n"),
-        (COUNTERPARTYLIB_PATH, "counterpartylib")
+        (UNOPARTYLIB_PATH, "unopartylib")
     ],
     "include_msvcr": True
 }
@@ -60,9 +60,9 @@ if sys.platform == "win32":
 shortcut_table = [(
     "DesktopShortcut",                  # Shortcut
     "DesktopFolder",                    # Directory_
-    "Counterparty GUI",                 # Name
+    "Unoparty GUI",                     # Name
     "TARGETDIR",                        # Component_
-    "[TARGETDIR]counterparty-gui.exe",  # Target
+    "[TARGETDIR]unoparty-gui.exe",      # Target
     None,                               # Arguments
     None,                               # Description
     None,                               # Hotkey
@@ -73,9 +73,9 @@ shortcut_table = [(
 ), (
     "ProgramMenuShortcut",              # Shortcut
     "ProgramMenuFolder",                # Directory_
-    "Counterparty GUI",                 # Name
+    "Unoparty GUI",                     # Name
     "TARGETDIR",                        # Component_
-    "[TARGETDIR]counterparty-gui.exe",  # Target
+    "[TARGETDIR]unoparty-gui.exe",      # Target
     None,                               # Arguments
     None,                               # Description
     None,                               # Hotkey
@@ -88,25 +88,25 @@ shortcut_table = [(
 bdist_msi_options = {'data': {"Shortcut": shortcut_table}}
     
 setup_options = {
-    'name': counterpartygui.APP_NAME,
-    'version': counterpartygui.APP_VERSION,
+    'name': unopartygui.APP_NAME,
+    'version': unopartygui.APP_VERSION,
     'options': {
         "build_exe": build_exe_options,
         "bdist_msi": bdist_msi_options
     },
-    'executables': [Executable("counterparty-gui.py", base=base, icon="assets/counterparty.ico")]
+    'executables': [Executable("unoparty-gui.py", base=base, icon="assets/counterparty.ico")]
 }
 
 setup(**setup_options)
 
 if sys.platform == "win32":
-    dist_path = 'dist/counterparty-gui-{}-amd64.msi'.format(counterpartygui.APP_VERSION)
-    new_dist_path = 'dist/counterparty-gui-{}-amd64-{}.msi'
+    dist_path = 'dist/unoparty-gui-{}-amd64.msi'.format(unopartygui.APP_VERSION)
+    new_dist_path = 'dist/unoparty-gui-{}-amd64-{}.msi'
 
 # Open,close, read file and calculate MD5 on its contents  
 with open(dist_path, 'rb') as dist_file:
     data = dist_file.read()    
     md5 = hashlib.md5(data).hexdigest()
 # Include the MD5 in the distribution filename
-new_dist_path = new_dist_path.format(counterpartygui.APP_VERSION + '-BETA', md5) # distutils does not support BETA
+new_dist_path = new_dist_path.format(unopartygui.APP_VERSION + '-BETA', md5) # distutils does not support BETA
 shutil.copy(dist_path, new_dist_path) # renaming raises a PermissionError (?)
